@@ -1,4 +1,7 @@
 // src/app/(marketing)/page.tsx
+"use client"; // Indique à Next.js qu'il s'agit d'un composant client interactif
+
+import { useState } from "react"; // Importation manquante à ajouter
 import { HeroSection } from "@/components/marketing/hero-section";
 import { PitchSection } from "@/components/marketing/pitch-section";
 import { ActionsSection } from "@/components/marketing/actions-section";
@@ -23,7 +26,6 @@ export default function LandingPage() {
     <div className="flex flex-col items-center gap-24 md:gap-32 relative">
       <BetaBadge />
       
-      {/* Passez la fonction openModal aux composants qui en ont besoin */}
       <HeroSection onStart={() => openModal("commencer", "Démarrer mon projet")} />
       <PitchSection />
       <ActionsSection onAudit={() => openModal("audit", "Mon Audit Gratuit")} />
