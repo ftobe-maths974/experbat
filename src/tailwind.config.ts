@@ -1,4 +1,3 @@
-// tailwind.config.ts
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -11,21 +10,17 @@ const config: Config = {
     extend: {
       colors: {
         projectHolder: {
-          DEFAULT: "#1e40af", // Bleu Royal
-          hover: "#1d3a99",   // Version assombrie pour le :hover
+          DEFAULT: "#1e40af", // Bleu Royal (Porteurs)
+          hover: "#1e3a8a",
         },
         professional: {
-          DEFAULT: "#0d9488", // Vert Émeraude/Turquoise
-          hover: "#0b7f73",   // Version assombrie pour le :hover
+          DEFAULT: "#0d9488", // Vert Émeraude (Pros)
+          hover: "#0f766e",
         },
       },
       borderRadius: {
-        'xl': '1rem', // Arrondi généreux
-      },
-      fontFamily: {
-        // Assurez-vous d'importer la police Geist dans votre projet
-        // via le fichier `src/lib/fonts.ts` et de l'appliquer dans le layout racine.
-        sans: ['var(--font-geist-sans)', 'sans-serif'],
+        'xl': '1rem',
+        '2xl': '1.5rem',
       },
     },
   },
