@@ -5,7 +5,7 @@ export function ActionsSection() {
       <div className="flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl md:flex-row">
         <div 
           className="h-64 w-full bg-cover bg-center md:h-auto md:w-1/2"
-          style={{ backgroundImage: "url('/image-porteur.png')" }}
+          style={{ backgroundImage: "url('./image-porteur.png')" }}
         />
         <div className="flex w-full flex-col justify-center p-8 md:w-1/2 md:p-12">
           <h2 className="text-3xl font-extrabold text-projectHolder mb-6">Vous êtes porteur de projet</h2>
@@ -24,7 +24,7 @@ export function ActionsSection() {
       <div className="flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl md:flex-row-reverse">
         <div 
           className="h-64 w-full bg-cover bg-center md:h-auto md:w-1/2"
-          style={{ backgroundImage: "url('/image-pro.png')" }}
+          style={{ backgroundImage: "url('/.image-pro.png')" }}
         />
         <div className="flex w-full flex-col justify-center p-8 md:w-1/2 md:p-12">
           <h2 className="text-3xl font-extrabold text-professional mb-6">Vous êtes professionnel</h2>

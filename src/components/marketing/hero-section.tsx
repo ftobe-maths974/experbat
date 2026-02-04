@@ -4,7 +4,7 @@ export function HeroSection() {
       {/* IMAGE ORIGINALE EN BACKGROUND */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/hero-bg.png')" }} // Remplacez par votre nom de fichier
+        style={{ backgroundImage: "url('/.hero-bg.png')" }} // Remplacez par votre nom de fichier
       />
       {/* Overlay pour la lisibilité du texte */}
       <div className="absolute inset-0 z-10 bg-black/40" /> 
