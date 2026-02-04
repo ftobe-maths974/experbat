@@ -16,7 +16,7 @@ export function ForumSection() {
         {/* IMAGE FORUM EN BACKGROUND */}
         <div 
           className="h-64 flex-1 bg-cover bg-center md:h-auto"
-          style={{ backgroundImage: "url('./image-forum.png')" }}
+          style={{ backgroundImage: "url('image-forum.png')" }}
         />
       </div>
     </section>

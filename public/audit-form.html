@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Audit Gratuit - Experbat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .screen {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            width: 140px;
+            height: 48px;
+            background: linear-gradient(135deg, #0EA5E9, #06b6d4);
+            border-radius: 8px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .badge-audit {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%);
+            color: #0EA5E9;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid #bae6fd;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0EA5E9, #10b981);
+            transition: width 0.4s ease-out;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 22px;
+            color: #1e293b;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        .subtitle {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        p {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+        
+        .info-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0EA5E9;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0;
+        }
+        
+        .choice-button {
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 15px;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+        }
+        
+        .choice-button:hover {
+            border-color: #0EA5E9;
+            background: #f0f9ff;
+            transform: translateX(4px);
+        }
+        
+        .choice-button.selected {
+            border-color: #0EA5E9;
+            background: #e0f2fe;
+            font-weight: 600;
+        }
+        
+        .emoji {
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        
+        .input-field, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+            margin: 10px 0;
+        }
+        
+        .input-field:focus, textarea:focus {
+            outline: none;
+            border-color: #0EA5E9;
+        }
+        
+        textarea {
+            resize: vertical;
+            line-height: 1.6;
+            min-height: 90px;
+        }
+        
+        .help-text {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        
+        .checkbox-item:hover {
+            background: #f8fafc;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item label {
+            cursor: pointer;
+            font-size: 15px;
+            color: #334155;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0EA5E9, #06b6d4);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        /* Écran de chargement */
+        .loader-container {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #0EA5E9;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loader-text {
+            font-size: 18px;
+            color: #1e293b;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .loader-subtext {
+            font-size: 14px;
+            color: #64748b;
+        }
+        
+        /* Rapport d'audit */
+        .report-container {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .report-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .report-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        
+        .report-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        
+        .report-header {
+            background: linear-gradient(135deg, #0EA5E9, #06b6d4);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .report-header h2 {
+            color: white;
+            margin-bottom: 8px;
+        }
+        
+        .report-date {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .report-section {
+            background: #f8fafc;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0EA5E9;
+        }
+        
+        .report-section-title {
+            font-size: 17px;
+            color: #1e293b;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .report-section-icon {
+            font-size: 22px;
+        }
+        
+        .report-item {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .report-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .report-item-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .report-item-value {
+            font-size: 15px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        
+        .budget-range {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #f0f9ff, #f0fdf4);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 16px 0;
+        }
+        
+        .budget-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .budget-min {
+            color: #0EA5E9;
+        }
+        
+        .budget-max {
+            color: #10b981;
+        }
+        
+        .budget-arrow {
+            font-size: 20px;
+            color: #cbd5e1;
+        }
+        
+        .alert-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        .alert-box-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .alert-box-content {
+            color: #78350f;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            background: #0EA5E9;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #0EA5E9;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -17px;
+            top: 18px;
+            width: 2px;
+            height: calc(100% - 10px);
+            background: #e2e8f0;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .timeline-phase {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        
+        .timeline-duration {
+            font-size: 13px;
+            color: #64748b;
+        }
+        
+        .expert-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        
+        .expert-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .expert-card:hover {
+            border-color: #0EA5E9;
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
+        }
+        
+        .expert-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .expert-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0EA5E9, #10b981);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        
+        .expert-info {
+            flex: 1;
+        }
+        
+        .expert-name {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .expert-title {
+            font-size: 13px;
+            color: #64748b;
+        }
+        
+        .expert-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        
+        .expert-badge {
+            font-size: 11px;
+            padding: 4px 10px;
+            background: #f0f9ff;
+            color: #0369a1;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .expert-match {
+            font-size: 13px;
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .cta-box {
+            background: linear-gradient(135deg, #f0f9ff, #f0fdf4);
+            border: 2px solid #bae6fd;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .cta-box-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+        
+        .cta-box-text {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+        
+        .btn-rdv {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-rdv:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Écran 1 : Introduction -->
+        <div class="screen active" id="screen-1">
+            <div class="logo">experbat</div>
+            <div class="badge-audit">
+                <span>✓</span> Audit gratuit et sans engagement
+            </div>
+            <h2>Obtenez votre audit personnalisé</h2>
+            <p class="subtitle">En quelques minutes, recevez une analyse sur mesure de votre projet : faisabilité, budget indicatif et points de vigilance.</p>
+            
+            <div class="info-box">
+                <strong>🎯 Cet audit est fait pour vous si :</strong><br>
+                • Vous explorez les possibilités pour votre projet<br>
+                • Vous souhaitez valider la faisabilité technique ou administrative<br>
+                • Vous voulez une première estimation budgétaire<br>
+                • Vous ne savez pas encore par où commencer
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-primary" onclick="goToScreen(2)">Commencer mon audit gratuit</button>
+            </div>
+        </div>
+
+        <!-- Écran 2 : Q1 - Situation -->
+        <div class="screen" id="screen-2">
+            <div class="logo">experbat</div>
+            <div class="progress-text">Question 1 sur 7</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 14%"></div>
+            </div>
+            
+            <h2>Où en êtes-vous dans votre réflexion ?</h2>
+            <p class="subtitle">Choisissez la situation qui correspond le mieux à votre projet</p>
+            
+            <div class="button-group">
+                <button class="choice-button" onclick="selectChoice('situation', 'decouverte', this)">
+                    <span class="emoji">🔍</span>
+                    <span>Je découvre les possibilités</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('situation', 'comparaison', this)">
+                    <span class="emoji">⚖️</span>
+                    <span>Je compare plusieurs scénarios</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('situation', 'validation', this)">
+                    <span class="emoji">✅</span>
+                    <span>J'ai une idée mais besoin de validation</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('situation', 'faisabilite', this)">
+                    <span class="emoji">📐</span>
+                    <span>Je veux estimer la faisabilité technique/administrative</span>
+                </button>
+            </div>
+            
+            <textarea id="situation-details" placeholder="Précisez votre situation si nécessaire (optionnel)"></textarea>
+            <div class="help-text">💡 Plus vous êtes précis, plus l'audit sera personnalisé</div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToScreen(1)">Retour</button>
+                <button class="btn btn-primary" onclick="saveAndContinue(2, 3)">Continuer</button>
+            </div>
+        </div>
+
+        <!-- Écran 3 : Q2 - Type d'intervention -->
+        <div class="screen" id="screen-3">
+            <div class="logo">experbat</div>
+            <div class="progress-text">Question 2 sur 7</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 28%"></div>
+            </div>
+            
+            <h2>Type d'intervention visée ?</h2>
+            <p class="subtitle">Sélectionnez le type de projet qui vous correspond</p>
+            
+            <div class="button-group">
+                <button class="choice-button" onclick="selectChoice('type', 'neuf', this)">
+                    <span class="emoji">🏗️</span>
+                    <span>Construction neuve</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('type', 'renovation', this)">
+                    <span class="emoji">🔨</span>
+                    <span>Rénovation / Extension</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('type', 'restructuration', this)">
+                    <span class="emoji">🏛️</span>
+                    <span>Restructuration / Réhabilitation</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('type', 'autre', this)">
+                    <span class="emoji">❓</span>
+                    <span>Autre / Je ne sais pas encore</span>
+                </button>
+            </div>
+            
+            <textarea id="type-details" placeholder="Décrivez votre projet en quelques mots (optionnel)"></textarea>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToScreen(2)">Retour</button>
+                <button class="btn btn-primary" onclick="saveAndContinue(3, 4)">Continuer</button>
+            </div>
+        </div>
+
+        <!-- Écran 4 : Q3 - Localisation -->
+        <div class="screen" id="screen-4">
+            <div class="logo">experbat</div>
+            <div class="progress-text">Question 3 sur 7</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 42%"></div>
+            </div>
+            
+            <h2>Localisation du projet ?</h2>
+            <p class="subtitle">Ces informations nous aident à identifier les contraintes réglementaires</p>
+            
+            <input type="text" class="input-field" id="localisation" placeholder="Commune ou zone (ex: Saint-Denis, Le Tampon)">
+            
+            <div class="button-group" style="margin-top: 20px;">
+                <button class="choice-button" onclick="selectChoice('terrain', 'identifie', this)">
+                    <span class="emoji">📍</span>
+                    <span>Terrain identifié</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('terrain', 'recherche', this)">
+                    <span class="emoji">🔎</span>
+                    <span>En recherche de terrain</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('terrain', 'na', this)">
+                    <span class="emoji">➖</span>
+                    <span>Pas encore applicable</span>
+                </button>
+            </div>
+            
+            <textarea id="contraintes-terrain" placeholder="Contraintes connues (zone protégée, pente, accès difficile, etc.) - Optionnel"></textarea>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToScreen(3)">Retour</button>
+                <button class="btn btn-primary" onclick="saveAndContinue(4, 5)">Continuer</button>
+            </div>
+        </div>
+
+        <!-- Écran 5 : Q4 - Priorité -->
+        <div class="screen" id="screen-5">
+            <div class="logo">experbat</div>
+            <div class="progress-text">Question 4 sur 7</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 56%"></div>
+            </div>
+            
+            <h2>Quelle est votre priorité principale ?</h2>
+            <p class="subtitle">Cela nous aidera à orienter nos recommandations</p>
+            
+            <div class="button-group">
+                <button class="choice-button" onclick="selectChoice('priorite', 'budget', this)">
+                    <span class="emoji">💰</span>
+                    <span>Respecter un budget précis</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('priorite', 'delai', this)">
+                    <span class="emoji">⏱️</span>
+                    <span>Respecter un délai imposé</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('priorite', 'qualite', this)">
+                    <span class="emoji">⭐</span>
+                    <span>Maximiser la qualité architecturale</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('priorite', 'conformite', this)">
+                    <span class="emoji">📋</span>
+                    <span>Conformité réglementaire assurée</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('priorite', 'indecis', this)">
+                    <span class="emoji">🤔</span>
+                    <span>Je ne sais pas / À discuter</span>
+                </button>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToScreen(4)">Retour</button>
+                <button class="btn btn-primary" onclick="saveAndContinue(5, 6)">Continuer</button>
+            </div>
+        </div>
+
+        <!-- Écran 6 : Q5 - Budget -->
+        <div class="screen" id="screen-6">
+            <div class="logo">experbat</div>
+            <div class="progress-text">Question 5 sur 7</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 70%"></div>
+            </div>
+            
+            <h2>Enveloppe budgétaire approximative ?</h2>
+            <p class="subtitle">Une estimation même large nous permet de cadrer nos recommandations</p>
+            
+            <div class="button-group">
+                <button class="choice-button" onclick="selectChoice('budget', '< 100k', this)">
+                    <span class="emoji">💵</span>
+                    <span>Moins de 100 000 €</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('budget', '100-250k', this)">
+                    <span class="emoji">💶</span>
+                    <span>100 000 € - 250 000 €</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('budget', '250-500k', this)">
+                    <span class="emoji">💷</span>
+                    <span>250 000 € - 500 000 €</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('budget', '> 500k', this)">
+                    <span class="emoji">💸</span>
+                    <span>Plus de 500 000 €</span>
+                </button>
+                <button class="choice-button" onclick="selectChoice('budget', 'indefini', this)">
+                    <span class="emoji">❔</span>
+                    <span>Budget non défini / À estimer</span>
+                </button>
+            </div>
+            
+            <textarea id="budget-contexte" placeholder="Contexte budgétaire (financement en cours, autofinancement, etc.) - Optionnel"></textarea>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToScreen(5)">Retour</button>
+                <button class="btn btn-primary" onclick="saveAndContinue(6, 7)">Continuer</button>
+            </div>
+        </div>
+
+        <!-- Écran 7 : Q6 - Documents -->
+        <div class="screen" id="screen-7">
+            <div class="logo">experbat</div>
+            <div class="progress-text">Question 6 sur 7</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 84%"></div>
+            </div>
+            
+            <h2>Avez-vous déjà des documents ?</h2>
+            <p class="subtitle">Cela nous aide à évaluer l'avancement de votre projet (sélection multiple possible)</p>
+            
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="doc-plans" value="plans">
+                    <label for="doc-plans">📐 Plans existants ou esquisse</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="doc-sol" value="sol">
+                    <label for="doc-sol">🏔️ Étude de sol (G1, G2)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="doc-plu" value="plu">
+                    <label for="doc-plu">📋 PLU / Certificat d'urbanisme</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="doc-devis" value="devis">
+                    <label for="doc-devis">💼 Devis d'entreprises</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="doc-autre" value="autre">
+                    <label for="doc-autre">📄 Autres documents techniques</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="doc-aucun" value="aucun">
+                    <label for="doc-aucun">❌ Aucun document pour le moment</label>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                💡 Pas d'inquiétude si vous n'avez pas encore de documents. Nous vous guiderons sur les étapes à venir.
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToScreen(6)">Retour</button>
+                <button class="btn btn-primary" onclick="saveAndContinue(7, 8)">Continuer</button>
+            </div>
+        </div>
+
+        <!-- Écran 8 : Q7 - Coordonnées -->
+        <div class="screen" id="screen-8">
+            <div class="logo">experbat</div>
+            <div class="progress-text">Question 7 sur 7</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+            
+            <h2>Pour recevoir votre audit personnalisé</h2>
+            <p class="subtitle">Vos coordonnées restent confidentielles et ne seront jamais partagées</p>
+            
+            <input type="text" class="input-field" id="prenom" placeholder="Prénom *" required>
+            <input type="email" class="input-field" id="email" placeholder="Email *" required>
+            <input type="tel" class="input-field" id="telephone" placeholder="Téléphone (optionnel)">
+            
+            <div class="checkbox-group" style="margin-top: 20px;">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="accept-email" checked>
+                    <label for="accept-email">J'accepte de recevoir mon audit par email</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="accept-contact">
+                    <label for="accept-contact">Je souhaite être contacté pour un échange avec un expert (optionnel)</label>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                🔒 <strong>Vos données sont protégées.</strong> Nous respectons votre vie privée et la confidentialité de vos informations conformément au RGPD.
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToScreen(7)">Retour</button>
+                <button class="btn btn-primary" onclick="generateAudit()">Générer mon audit gratuit</button>
+            </div>
+        </div>
+
+        <!-- Écran 9 : Chargement -->
+        <div class="screen" id="screen-9">
+            <div class="logo">experbat</div>
+            <div class="loader-container">
+                <div class="spinner"></div>
+                <div class="loader-text">Génération de votre audit personnalisé...</div>
+                <div class="loader-subtext">Analyse de vos données en cours</div>
+            </div>
+        </div>
+
+        <!-- Écran 10 : Rapport d'audit -->
+        <div class="screen" id="screen-10">
+            <div class="logo">experbat</div>
+            
+            <div class="report-header">
+                <h2>Votre Audit Personnalisé</h2>
+                <div class="report-date" id="report-date"></div>
+            </div>
+            
+            <div class="report-container">
+                <!-- Section Synthèse -->
+                <div class="report-section">
+                    <div class="report-section-title">
+                        <span class="report-section-icon">📊</span>
+                        Synthèse de votre projet
+                    </div>
+                    <div class="report-item">
+                        <div class="report-item-label">Type d'intervention</div>
+                        <div class="report-item-value" id="report-type"></div>
+                    </div>
+                    <div class="report-item">
+                        <div class="report-item-label">Localisation</div>
+                        <div class="report-item-value" id="report-localisation"></div>
+                    </div>
+                    <div class="report-item">
+                        <div class="report-item-label">Statut du terrain</div>
+                        <div class="report-item-value" id="report-terrain"></div>
+                    </div>
+                    <div class="report-item">
+                        <div class="report-item-label">Priorité identifiée</div>
+                        <div class="report-item-value" id="report-priorite"></div>
+                    </div>
+                </div>
+
+                <!-- Section Faisabilité -->
+                <div class="report-section">
+                    <div class="report-section-title">
+                        <span class="report-section-icon">✅</span>
+                        Analyse de faisabilité
+                    </div>
+                    <div class="report-item">
+                        <div class="report-item-label">Faisabilité réglementaire</div>
+                        <div class="report-item-value">
+                            <strong style="color: #10b981;">✓ Projet réalisable</strong><br>
+                            Votre projet est compatible avec les règles d'urbanisme de La Réunion. Une consultation du PLU local sera nécessaire pour confirmer les contraintes spécifiques (hauteur, emprise au sol, aspect extérieur).
+                        </div>
+                    </div>
+                    <div class="report-item">
+                        <div class="report-item-label">Documents administratifs requis</div>
+                        <div class="report-item-value" id="report-documents-requis"></div>
+                    </div>
+                </div>
+
+                <!-- Section Budget -->
+                <div class="report-section">
+                    <div class="report-section-title">
+                        <span class="report-section-icon">💰</span>
+                        Estimation budgétaire indicative
+                    </div>
+                    <div class="budget-range">
+                        <div class="budget-min">
+                            <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">MINIMUM</div>
+                            <div class="budget-value" id="report-budget-min">-</div>
+                        </div>
+                        <div class="budget-arrow">→</div>
+                        <div class="budget-max">
+                            <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">MAXIMUM</div>
+                            <div class="budget-value" id="report-budget-max">-</div>
+                        </div>
+                    </div>
+                    <div class="report-item">
+                        <div class="report-item-label">Décomposition indicative</div>
+                        <div class="report-item-value" id="report-budget-decomposition"></div>
+                    </div>
+                </div>
+
+                <!-- Section Points de vigilance -->
+                <div class="report-section">
+                    <div class="report-section-title">
+                        <span class="report-section-icon">⚠️</span>
+                        Points de vigilance
+                    </div>
+                    <div class="alert-box">
+                        <div class="alert-box-title">Contraintes identifiées</div>
+                        <div class="alert-box-content" id="report-vigilance"></div>
+                    </div>
+                </div>
+
+                <!-- Section Timeline -->
+                <div class="report-section">
+                    <div class="report-section-title">
+                        <span class="report-section-icon">📅</span>
+                        Timeline indicative du projet
+                    </div>
+                    <div class="timeline" id="report-timeline"></div>
+                </div>
+
+                <!-- Section Prochaines étapes -->
+                <div class="report-section">
+                    <div class="report-section-title">
+                        <span class="report-section-icon">🎯</span>
+                        Prochaines étapes recommandées
+                    </div>
+                    <div class="report-item">
+                        <div class="report-item-value" id="report-next-steps"></div>
+                    </div>
+                </div>
+
+                <!-- Section Experts recommandés -->
+                <div class="report-section">
+                    <div class="report-section-title">
+                        <span class="report-section-icon">👥</span>
+                        Experts recommandés pour votre projet
+                    </div>
+                    <p style="color: #64748b; font-size: 14px; margin-bottom: 16px;">
+                        Sur la base de votre projet, voici les experts les plus pertinents pour vous accompagner :
+                    </p>
+                    <div class="expert-list" id="expert-list"></div>
+                </div>
+            </div>
+
+            <!-- CTA Prise de RDV -->
+            <div class="cta-box">
+                <div class="cta-box-title">Envie d'aller plus loin ?</div>
+                <div class="cta-box-text">
+                    Échangez gratuitement pendant 30 minutes avec un expert pour approfondir votre audit et poser toutes vos questions.
+                </div>
+                <button class="btn-rdv" onclick="alert('Intégration calendrier Calendly/autre à venir')">
+                    📅 Prendre rendez-vous avec un expert
+                </button>
+            </div>
+
+            <div class="nav-buttons" style="margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="downloadAudit()">📥 Télécharger en PDF</button>
+                <button class="btn btn-primary" onclick="sendByEmail()">📧 Recevoir par email</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Données du formulaire
+        const formData = {
+            situation: '',
+            situationDetails: '',
+            type: '',
+            typeDetails: '',
+            localisation: '',
+            terrain: '',
+            contraintesTerrain: '',
+            priorite: '',
+            budget: '',
+            budgetContexte: '',
+            documents: [],
+            prenom: '',
+            email: '',
+            telephone: '',
+            acceptEmail: true,
+            acceptContact: false
+        };
+
+        // Navigation entre écrans
+        function goToScreen(screenNumber) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(`screen-${screenNumber}`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Sélection de choix
+        function selectChoice(field, value, button) {
+            // Retirer la sélection des autres boutons du même groupe
+            button.parentElement.querySelectorAll('.choice-button').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            // Ajouter la sélection au bouton cliqué
+            button.classList.add('selected');
+            // Enregistrer la valeur
+            formData[field] = value;
+        }
+
+        // Sauvegarder et continuer
+        function saveAndContinue(currentScreen, nextScreen) {
+            // Sauvegarder les données de l'écran actuel
+            if (currentScreen === 2) {
+                formData.situationDetails = document.getElementById('situation-details').value;
+            } else if (currentScreen === 3) {
+                formData.typeDetails = document.getElementById('type-details').value;
+            } else if (currentScreen === 4) {
+                formData.localisation = document.getElementById('localisation').value;
+                formData.contraintesTerrain = document.getElementById('contraintes-terrain').value;
+            } else if (currentScreen === 6) {
+                formData.budgetContexte = document.getElementById('budget-contexte').value;
+            } else if (currentScreen === 7) {
+                // Récupérer les documents cochés
+                formData.documents = [];
+                ['plans', 'sol', 'plu', 'devis', 'autre', 'aucun'].forEach(doc => {
+                    const checkbox = document.getElementById(`doc-${doc}`);
+                    if (checkbox && checkbox.checked) {
+                        formData.documents.push(doc);
+                    }
+                });
+            }
+            
+            goToScreen(nextScreen);
+        }
+
+        // Générer l'audit
+        function generateAudit() {
+            // Validation des champs obligatoires
+            const prenom = document.getElementById('prenom').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (!prenom || !email) {
+                alert('Veuillez remplir au minimum votre prénom et votre email');
+                return;
+            }
+            
+            // Sauvegarder les coordonnées
+            formData.prenom = prenom;
+            formData.email = email;
+            formData.telephone = document.getElementById('telephone').value.trim();
+            formData.acceptEmail = document.getElementById('accept-email').checked;
+            formData.acceptContact = document.getElementById('accept-contact').checked;
+            
+            // Afficher l'écran de chargement
+            goToScreen(9);
+            
+            // Simuler la génération (3 secondes)
+            setTimeout(() => {
+                populateReport();
+                goToScreen(10);
+            }, 3000);
+        }
+
+        // Remplir le rapport
+        function populateReport() {
+            // Date
+            const now = new Date();
+            document.getElementById('report-date').textContent = `Généré le ${now.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            })}`;
+            
+            // Synthèse
+            const typeLabels = {
+                'neuf': 'Construction neuve',
+                'renovation': 'Rénovation / Extension',
+                'restructuration': 'Restructuration / Réhabilitation',
+                'autre': 'Autre type d\'intervention'
+            };
+            document.getElementById('report-type').textContent = typeLabels[formData.type] || 'Non spécifié';
+            
+            document.getElementById('report-localisation').textContent = formData.localisation || 'La Réunion (zone à préciser)';
+            
+            const terrainLabels = {
+                'identifie': '✓ Terrain identifié',
+                'recherche': '🔎 En recherche active',
+                'na': 'Non applicable à ce stade'
+            };
+            document.getElementById('report-terrain').textContent = terrainLabels[formData.terrain] || 'Non renseigné';
+            
+            const prioriteLabels = {
+                'budget': '💰 Maîtrise budgétaire',
+                'delai': '⏱️ Respect des délais',
+                'qualite': '⭐ Qualité architecturale',
+                'conformite': '📋 Conformité réglementaire',
+                'indecis': 'À définir avec l\'expert'
+            };
+            document.getElementById('report-priorite').textContent = prioriteLabels[formData.priorite] || 'Non renseignée';
+            
+            // Documents requis
+            let docsRequis = '';
+            if (formData.type === 'neuf') {
+                docsRequis = '• Certificat d\'urbanisme<br>• Étude de sol G2<br>• Permis de construire<br>• Plans d\'architecte (PC1 à PC4)';
+            } else if (formData.type === 'renovation') {
+                docsRequis = '• Déclaration préalable ou Permis de construire (selon ampleur)<br>• Plans existants + projet<br>• Diagnostic amiante si bâti > 1997';
+            } else {
+                docsRequis = '• Variable selon l\'ampleur des travaux<br>• Consultation d\'un architecte recommandée<br>• Diagnostic structurel potentiellement nécessaire';
+            }
+            document.getElementById('report-documents-requis').innerHTML = docsRequis;
+            
+            // Budget
+            const budgetRanges = {
+                '< 100k': { min: 50000, max: 100000 },
+                '100-250k': { min: 100000, max: 250000 },
+                '250-500k': { min: 250000, max: 500000 },
+                '> 500k': { min: 500000, max: 800000 },
+                'indefini': { min: 150000, max: 350000 }
+            };
+            
+            const range = budgetRanges[formData.budget] || { min: 150000, max: 350000 };
+            document.getElementById('report-budget-min').textContent = formatCurrency(range.min);
+            document.getElementById('report-budget-max').textContent = formatCurrency(range.max);
+            
+            let decomposition = '';
+            if (formData.type === 'neuf') {
+                decomposition = `
+                    • Terrain : 30-40% du budget total<br>
+                    • Construction : 1 400-1 800 €/m² (selon finitions)<br>
+                    • VRD et aménagements : 10-15%<br>
+                    • Honoraires MOE : 10-12%<br>
+                    • Imprévus recommandés : 5-10%
+                `;
+            } else if (formData.type === 'renovation') {
+                decomposition = `
+                    • Gros œuvre : 40-50% du budget travaux<br>
+                    • Second œuvre : 30-40%<br>
+                    • Finitions : 15-20%<br>
+                    • Honoraires MOE : 8-12%<br>
+                    • Imprévus recommandés : 10-15% (démolitions)
+                `;
+            } else {
+                decomposition = `
+                    • Études préalables : 5-8%<br>
+                    • Travaux structurels : variable selon ampleur<br>
+                    • Mises aux normes : 15-25%<br>
+                    • Honoraires MOE : 10-15%<br>
+                    • Imprévus recommandés : 10-20%
+                `;
+            }
+            document.getElementById('report-budget-decomposition').innerHTML = decomposition;
+            
+            // Points de vigilance
+            let vigilance = '';
+            if (formData.type === 'neuf') {
+                vigilance = `
+                    • <strong>Risque cyclonique :</strong> Construction parasismique et paracyclonique obligatoire (surcoût 8-12%)<br>
+                    • <strong>Délais administratifs :</strong> Instruction PC = 3-4 mois minimum<br>
+                    • <strong>Accès chantier :</strong> Vérifier viabilisation et accessibilité terrain
+                `;
+            } else if (formData.type === 'renovation') {
+                vigilance = `
+                    • <strong>Découvertes imprévues :</strong> Pathologies masquées possibles (budget +15-20%)<br>
+                    • <strong>Diagnostics obligatoires :</strong> Amiante, plomb, termites selon date construction<br>
+                    • <strong>Occupation des lieux :</strong> Planifier relogement temporaire si nécessaire
+                `;
+            } else {
+                vigilance = `
+                    • <strong>Faisabilité structurelle :</strong> Diagnostic béton/charpente indispensable<br>
+                    • <strong>Mises aux normes :</strong> Accessibilité PMR, sécurité incendie selon usage<br>
+                    • <strong>Surcoûts potentiels :</strong> Renforcements structurels non anticipés
+                `;
+            }
+            document.getElementById('report-vigilance').innerHTML = vigilance;
+            
+            // Timeline
+            let timeline = '';
+            if (formData.type === 'neuf') {
+                timeline = `
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Phase études et conception</div>
+                        <div class="timeline-duration">3-5 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Instruction permis de construire</div>
+                        <div class="timeline-duration">3-4 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Consultation et choix entreprises</div>
+                        <div class="timeline-duration">2-3 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Travaux de construction</div>
+                        <div class="timeline-duration">12-18 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Réception et finitions</div>
+                        <div class="timeline-duration">1-2 mois</div>
+                    </div>
+                `;
+            } else if (formData.type === 'renovation') {
+                timeline = `
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Diagnostics et études préalables</div>
+                        <div class="timeline-duration">1-2 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Conception et autorisations</div>
+                        <div class="timeline-duration">2-3 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Consultation entreprises</div>
+                        <div class="timeline-duration">1-2 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Travaux de rénovation</div>
+                        <div class="timeline-duration">6-12 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Réception et ajustements</div>
+                        <div class="timeline-duration">1 mois</div>
+                    </div>
+                `;
+            } else {
+                timeline = `
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Audit technique approfondi</div>
+                        <div class="timeline-duration">2-3 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Études structure et conception</div>
+                        <div class="timeline-duration">3-4 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Autorisations administratives</div>
+                        <div class="timeline-duration">2-4 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Travaux de restructuration</div>
+                        <div class="timeline-duration">8-15 mois</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Réception et livraison</div>
+                        <div class="timeline-duration">1-2 mois</div>
+                    </div>
+                `;
+            }
+            document.getElementById('report-timeline').innerHTML = timeline;
+            
+            // Prochaines étapes
+            let nextSteps = '';
+            if (!formData.documents.includes('plans')) {
+                nextSteps += '1. <strong>Consulter un architecte</strong> pour une première esquisse et étude de faisabilité<br>';
+            }
+            if (!formData.documents.includes('plu') && formData.localisation) {
+                nextSteps += '2. <strong>Obtenir un certificat d\'urbanisme</strong> pour confirmer la constructibilité<br>';
+            }
+            if (formData.type === 'neuf' && !formData.documents.includes('sol')) {
+                nextSteps += '3. <strong>Commander une étude de sol G2</strong> (obligatoire depuis 2020)<br>';
+            }
+            if (formData.budget === 'indefini') {
+                nextSteps += '4. <strong>Affiner votre budget</strong> via un chiffrage détaillé avec un économiste<br>';
+            }
+            nextSteps += `5. <strong>Planifier un RDV</strong> avec un expert Experbat pour valider votre stratégie`;
+            document.getElementById('report-next-steps').innerHTML = nextSteps;
+            
+            // Experts recommandés
+            populateExperts();
+        }
+
+        // Remplir la liste d'experts
+        function populateExperts() {
+            const experts = [
+                {
+                    initials: 'AR',
+                    name: 'Axel RYMASZ',
+                    title: 'Architecte & Ingénieur structure',
+                    badges: ['Construction neuve', 'Rénovation', 'La Réunion'],
+                    match: '98% de compatibilité avec votre projet'
+                },
+                {
+                    initials: 'MC',
+                    name: 'Marie CHEN',
+                    title: 'Économiste de la construction',
+                    badges: ['Budget', 'Optimisation', 'Études de prix'],
+                    match: '92% de compatibilité avec votre projet'
+                },
+                {
+                    initials: 'JD',
+                    name: 'Jean DUBOIS',
+                    title: 'Architecte DPLG',
+                    badges: ['Architecture', 'Permis de construire', 'Design'],
+                    match: '88% de compatibilité avec votre projet'
+                }
+            ];
+            
+            const expertList = document.getElementById('expert-list');
+            expertList.innerHTML = '';
+            
+            experts.forEach(expert => {
+                const card = document.createElement('div');
+                card.className = 'expert-card';
+                card.onclick = () => alert(`Intégration calendrier pour ${expert.name} à venir`);
+                
+                card.innerHTML = `
+                    <div class="expert-header">
+                        <div class="expert-avatar">${expert.initials}</div>
+                        <div class="expert-info">
+                            <div class="expert-name">${expert.name}</div>
+                            <div class="expert-title">${expert.title}</div>
+                        </div>
+                    </div>
+                    <div class="expert-badges">
+                        ${expert.badges.map(badge => `<span class="expert-badge">${badge}</span>`).join('')}
+                    </div>
+                    <div class="expert-match">✓ ${expert.match}</div>
+                `;
+                
+                expertList.appendChild(card);
+            });
+        }
+
+        // Formater devise
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('fr-FR', {
+                style: 'currency',
+                currency: 'EUR',
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        // Télécharger en PDF (à implémenter)
+        function downloadAudit() {
+            alert('Fonctionnalité de téléchargement PDF à intégrer (librairie jsPDF recommandée)');
+        }
+
+        // Envoyer par email (à implémenter)
+        function sendByEmail() {
+            alert(`Email de l'audit sera envoyé à : ${formData.email}\n\n(Intégration backend API nécessaire)`);
+        }
+    </script>
+</body>
+</html>
